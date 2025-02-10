@@ -1,7 +1,6 @@
 #include <chrono>
 #include <iostream>
 #include <string.h>
-#include <vector>
 
 #define ONE_MILLION 1000000
 
