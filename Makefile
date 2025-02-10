@@ -16,7 +16,7 @@ memset_ex.o: memset_ex.s
 	$(AS) memset_ex.s -o $@
 
 run:
-	qemu-riscv-static main
+	qemu-riscv64-static main
 
 clean:
 	rm -f main speed_test main.o memset_custom.o memset_ex.o 
