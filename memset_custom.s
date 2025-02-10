@@ -30,10 +30,10 @@ memset_custom:
     j 1b
 
 2:
-    sub t2, t1, t0 /* Increment memory address */
+    sub t2, t1, t0 /* Compute difference between end and start memory address */
     blt t2, t4, 3f /* If less than 4 bytes, we are done */
     sw a1, 0(t0) /* Store word */
-    addi t0, t0, 4 /* Increment memory address */
+    addi t0, t0, 4 /* Increment memory address by 4 */
     j 2b
 
 3:
