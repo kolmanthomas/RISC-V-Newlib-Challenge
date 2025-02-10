@@ -1,14 +1,18 @@
 #include <chrono>
 #include <iostream>
 #include <string.h>
+#include <vector>
 
-extern "C" void * memset_custom(void * ptr, int value, size_t num);
-extern "C" void * memset_ex(void * ptr, int value, size_t num);
+#define ONE_MILLION 1000000
 
-//const size_t buffer_size = 1024;
-//const size_t buffer_size = 65536;
-//const size_t buffer_size = 1048576;
-const size_t buffer_size_1 = 33554432;
+extern "C" {
+
+void * memset_custom(void * ptr, int value, size_t num);
+void * memset_ex(void * ptr, int value, size_t num);
+
+} // extern "C"
+
+typedef std::chrono::duration<double, std::micro> double_microseconds;
 
 void run_speed_test(size_t buffer_size)
 {
@@ -31,14 +35,31 @@ void run_speed_test(size_t buffer_size)
     memset_custom(ptr_memset_custom, value, buffer_size); 
     std::chrono::high_resolution_clock::time_point end_memset_custom = std::chrono::high_resolution_clock::now();    
 
+    /*
     std::cout << "Time elapsed for memset (glibc) is: " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << std::endl;
     std::cout << "Time elapsed for memset_ex (memset from challenge handout) is: " << std::chrono::duration_cast<std::chrono::microseconds>(end_memset_ex - start_memset_ex).count() << std::endl;
     std::cout << "Time elapsed for memset_custom is: " << std::chrono::duration_cast<std::chrono::microseconds>(end_memset_custom - start_memset_custom).count() << std::endl;
+    */
+    std::cout << std::fixed 
+              << std::chrono::duration_cast<double_microseconds>(end - start).count() / (double) ONE_MILLION << ","
+              << std::chrono::duration_cast<double_microseconds>(end_memset_ex - start_memset_ex).count() / ONE_MILLION << ","
+              << std::chrono::duration_cast<double_microseconds>(end_memset_custom - start_memset_custom).count() / ONE_MILLION;
 
 }
 
 int main(int argc, char* argv[]) 
 {
-    run_speed_test(buffer_size_1);
-    return 0;
+    if (argc != 2) {
+        std::cout << "Usage: " << argv[0] << " <buffer_size>" << std::endl;
+        return EXIT_FAILURE;
+    } 
+
+    long buffer_size = strtol(argv[1], NULL, 10);
+    if (!buffer_size) {
+        std::cerr << "Invalid buffer size: " << argv[1] << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    run_speed_test(buffer_size);
+    return EXIT_SUCCESS;
 }
