@@ -27,7 +27,7 @@ plt.xscale('log', base=2)
 plt.xticks(powers_of_two)
 plt.xlabel('Buffer Size (Bytes)')
 plt.ylabel('Time (s)')
-plt.title("Speed comparison of glibc memset, the example memset, and my custom memset")
+plt.title("Speed comparison of memset implementations")
 plt.legend()
 plt.savefig("speed_comparison.png")
 
