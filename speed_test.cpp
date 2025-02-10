@@ -42,8 +42,8 @@ void run_speed_test(size_t buffer_size)
     */
     std::cout << std::fixed 
               << std::chrono::duration_cast<double_microseconds>(end - start).count() / (double) ONE_MILLION << ","
-              << std::chrono::duration_cast<double_microseconds>(end_memset_ex - start_memset_ex).count() / ONE_MILLION << ","
-              << std::chrono::duration_cast<double_microseconds>(end_memset_custom - start_memset_custom).count() / ONE_MILLION;
+              << std::chrono::duration_cast<double_microseconds>(end_memset_ex - start_memset_ex).count() / (double) ONE_MILLION << ","
+              << std::chrono::duration_cast<double_microseconds>(end_memset_custom - start_memset_custom).count() / (double) ONE_MILLION;
 
 }
 
